@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee login</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+
+</head>
+
+<body id="body">
+    <script>
+        var loginData = JSON.parse(localStorage.getItem("employeeLogin"))
+        if (loginData) {
+            const formData = new FormData();
+            formData.append("username" ,loginData.name);
+            formData.append("password" ,loginData.eId);
+            axios.post(`/login`, formData).then(res => res.redirected && ( location.href = res.url ));
+        }
+    </script>
+    <div class="mainIntro">
+        Welcome to <span class="brand">BillSafe</span>
+    </div>
+    <div class="bodydiv">
+        <div class="main">
+            <form action="/login" method="post">
+                <ul class="content">
+
+                    <li class="header">
+                        <h1 id="h1" style="color: #748686;">Employee Login</h1>
+                    </li>
+                    <li class="input">
+                        <label for="username">Employee Name</label>
+                        <input id="username" type="text" name="username" placeholder="Employee Name">
+                    </li>
+                    <li class="input">
+                        <label for="password">Employee ID</label>
+                        <input id="password" type="text" name="password" placeholder="Employee id">
+                    </li>
+                    <input class="submit" style="cursor: pointer;" onclick="submitHandler(event)" type="submit">
+                    </li>
+                </ul>
+            </form>
+
+        </div>
+    </div>
+
+</body>
+<script>
+    
+
+    const randomNumber = (min, max) => {
+        return Math.floor(Math.random() * (max - min + 1) + min)
+    }
+    const rgb = () => {
+        const red = randomNumber(0, 255);
+        const green = randomNumber(0, 255);
+        const blue = randomNumber(0, 255);
+        return `rgba(${red},${green},${blue},0.3)`;
+    }
+
+
+
+
+
+    setInterval(() => {
+        document.querySelector(".mainIntro").style.backgroundColor = rgb();
+    }, [700]);
+
+
+
+</script>
+
+</html>

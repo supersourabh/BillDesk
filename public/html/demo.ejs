@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee login</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+
+</head>
+
+<body id="body" onload="loginChecker()">
+    <div class="mainIntro">
+        Welcome to <span class="brand">BillSafe</span>
+    </div>
+    <div class="bodydiv">
+        <div class="main">
+
+            <ul class="content">
+
+                <li class="header">
+                    <h1 id="h1" style="color: #748686;">Employee Login</h1>
+                </li>
+                <li class="input">
+                    <label for="username">Employee Name</label>
+                    <input id="username" type="text" name="username" placeholder="Employee Name">
+                </li>
+                <li class="input">
+                    <label for="password">Employee ID</label>
+                    <input id="password" type="text" name="password" placeholder="Employee id">
+                </li>
+                <input class="submit" type="submit" onclick="submitHandler()">
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+</body>
+<script>
+    async function submitHandler() {
+        let name = document.getElementById("username").value;
+        let pass = document.getElementById("password").value;
+        let employeeData =await axios.get(`http://127.0.0.1:4000/login?username=${name}&Password=${pass}`).then(res => res.data).catch(err=>alert(err));
+        console.log(employeeData);
+        localStorage.setItem("employeeLogin", JSON.stringify(employeeData));
+        document.getElementById("username").value = "";
+        document.getElementById("password").value = "";
+    }
+
+    function loginChecker()
+    {
+        
+        // const empLogin = localStorage.getItem("employeeLogin");
+        // if(empLogin)
+        // {
+        //     window.history.go("/employee-details.html");
+        // }
+        
+    }
+
+    const randomNumber = (min, max) => {
+        return Math.floor(Math.random() * (max - min + 1) + min)
+    }
+    const rgb = () => {
+        const red = randomNumber(0, 255);
+        const green = randomNumber(0, 255);
+        const blue = randomNumber(0, 255);
+        return `rgb(${red},${green},${blue})`;
+    }
+
+    const login = document.getElementById("login");
+    const signup = document.getElementById("signup");
+
+    setInterval(() => {
+        document.querySelector(".mainIntro").style.backgroundColor = rgb();
+    }, [1000]);
+
+    function submit() {
+        alert("hello" + document.getElementById("username").value);
+        const formData = new FormData();
+        formData.append("empName", document.getElementById("username").value);
+        formData.append("empId", document.getElementById("password").value);
+        formData.append("empDept", document.getElementById("department").value);
+        console.log(formData);
+    }
+
+</script>
+
+</html>

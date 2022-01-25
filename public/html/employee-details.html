@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee-details</title>
+    <link rel="stylesheet" href="/frontend/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+</head>
+
+<body >
+    <div class="employeeDetailsDiv">
+        <header class="introHeader">
+            <span id="intro">Hello,</span>
+            <span id="name">Sourabh kotagi</span>
+            <span id="mail">Email : kotagisourabh81@gmail.com</span>
+        </header>
+        <main class="employeeDetailsMain">
+            
+                <table class="table table-striped table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">T.Id</th>
+                        <th scope="col">Task Name</th>
+                        <th scope="col">Last-date</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Manager</th>
+                      </tr>
+                    </thead>
+                    <tbody id="taskData">
+                     <!-- user tasks rendering area -->
+                    </tbody>
+                  </table>
+        </main>
+    </div>
+</body>
+<script>
+    tasks();
+    async function results(eId){
+        const res = await axios.get(`http://127.0.0.1:4000/employee/${eId}/findtask`).then(res=>res.data    );
+        return res;
+    }
+    async function tasks()
+    {
+        const empDataLogin = JSON.parse(localStorage.getItem("employeeLogin"))
+        let tasks = await results(empDataLogin.eId);
+        const taskData = document.getElementById("taskData");
+        for(let i=0 ; i<tasks.length ; i++)
+        {
+            if(tasks[i].status==="pending")
+            {
+                        let tr = document.createElement("tr");
+                        taskData.appendChild(tr);  
+                    
+                        let sn = document.createElement("th");
+                        sn.innerHTML = tasks[i].tId ;   
+                    
+                        let task= document.createElement("td");
+                        task.innerHTML=tasks[i].name;
+                    
+                        let lastDate= document.createElement("td");
+                        lastDate.innerHTML = tasks[i].lastDate;
+                    
+                        let status = document.createElement("td");
+            
+                        status.innerHTML=tasks[i].status;
+                        status.style.fontWeight = "bold";
+            
+                        if(tasks[i].status ==="pending")
+                        {
+                            status.style.color = "red";
+                            sn.style.color = "red";
+                            
+                        }else{
+                            status.style.color = "green";
+                            sn.style.color = "green";
+                        }
+            
+                        let manager = document.createElement("td");
+                        manager.innerHTML=tasks[i].manager;
+                    
+                        tr.appendChild(sn);
+                        tr.appendChild(task);
+                        tr.appendChild(lastDate);
+                        tr.appendChild(status);
+                        tr.appendChild(manager);
+            }
+    }
+        for(let i=0 ; i<tasks.length ; i++)
+        {
+            if(tasks[i].status==="complete")
+            {
+
+                let tr = document.createElement("tr");
+                taskData.appendChild(tr);  
+            
+                let sn = document.createElement("th");
+                sn.innerHTML = tasks[i].tId ;
+            
+                let task= document.createElement("td");
+                task.innerHTML=tasks[i].name;
+            
+                let lastDate= document.createElement("td");
+                lastDate.innerHTML = tasks[i].lastDate;
+            
+                let status = document.createElement("td");
+    
+                status.innerHTML=tasks[i].status;
+                status.style.fontWeight = "bold";
+    
+                if(tasks[i].status ==="pending")
+                {
+                    status.style.color = "red";
+                    sn.style.color = "red";
+                    
+                }else{
+                    status.style.color = "green";
+                    sn.style.color = "green";
+                }
+    
+                let manager = document.createElement("td");
+                manager.innerHTML=tasks[i].manager;
+            
+                tr.appendChild(sn);
+                tr.appendChild(task);
+                tr.appendChild(lastDate);
+                tr.appendChild(status);
+                tr.appendChild(manager);
+            }
+    }
+    }
+
+
+
+
+
+</script>
+
+</html>
