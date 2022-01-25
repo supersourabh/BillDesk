@@ -7,19 +7,6 @@ const fs = require("fs")
 const mysql = require('mysql');
 
 
-var connection = mysql.createConnection({
-    host: 'localhost', //mysql database name
-    user: 'root', //mysql database username
-    password: 'Sourabh@2000', //mysql database password
-    database: '' //mysql database name
-});
-
-
-connection.connect(function (err) {
-    if (err) throw err
-    console.log('You are now connected...')
-})
-
 app.use(express.json())
 
 app.use(cors())
@@ -161,17 +148,17 @@ let tasks = [
     }
 ]
 
-app.get("/run", (req, res) => {
-    //to insert record into mysql
-    for (let i = 0; i < employees.length; i++) {
+// app.get("/run", (req, res) => {
+//     //to insert record into mysql
+//     for (let i = 0; i < employees.length; i++) {
 
-        connection.query(`INSERT INTO 'employee' ('eId', 'name', 'department', 'address','mobile' ,'mail' ,'country','joined','tasksCompleted','employeer') VALUES (${employees[i].eId}, '${employees[i].name}' , '${employees[i].department}' , '${employees[i].address}',${employees[i].mobile},'${employees[i].mail}','${employees[i].country}','${date}',${employees[i].tasksCompleted},${employees[i].employer})`, function (error, results, fields) {
-            if (error) throw error;
-            console.log('The response is: ', results);
-        });
-    }   
-    res.send(JSON.stringify(connection.query("select * from  'employee'")))
-})
+//         connection.query(`INSERT INTO 'employee' ('eId', 'name', 'department', 'address','mobile' ,'mail' ,'country','joined','tasksCompleted','employeer') VALUES (${employees[i].eId}, '${employees[i].name}' , '${employees[i].department}' , '${employees[i].address}',${employees[i].mobile},'${employees[i].mail}','${employees[i].country}','${date}',${employees[i].tasksCompleted},${employees[i].employer})`, function (error, results, fields) {
+//             if (error) throw error;
+//             console.log('The response is: ', results);
+//         });
+//     }   
+//     res.send(JSON.stringify(connection.query("select * from  'employee'")))
+// })
 
 
 //home
