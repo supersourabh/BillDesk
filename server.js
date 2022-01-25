@@ -5,6 +5,9 @@ const dateTime = require("date-and-time")
 const path = require("path")
 const fs = require("fs")
 const mysql = require('mysql');
+const favicon = require('serve-favicon');
+
+app.use(favicon(__dirname + '/public/images/favicon.ico'));
 
 
 app.use(express.json())
